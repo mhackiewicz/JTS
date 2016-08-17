@@ -1,0 +1,323 @@
+﻿<h3>
+    Recent Competiotions
+</h3>
+<div class="main-action-container">
+    <button class="btn btn-primary btn-sm" ng-click="vm.openModal()" ng-show="vm.isAdmin">
+        Add competitions
+    </button>
+</div>
+<div class="panel panel-default" ng-repeat="comp in vm.competitions">
+    <div class="panel-heading">
+        <h3 class="panel-title">
+            {{comp.name}}
+            
+            <button class="btn btn-primary btn-sm" ng-click="vm.openSignUpModal(comp._id)" ng-show="!vm.isAdmin">
+                Sign up
+            </button>
+             <button class="btn btn-primary btn-sm" ng-click="vm.openCompetitorsModal(comp._id)" >
+                Show all competitors
+            </button>
+            <button class="btn btn-danger btn-sm" ng-click="vm.deleteCompetition(comp._id)" ng-show="vm.isAdmin">
+                Delete
+            </button>
+            <button class="btn btn-primary btn-sm" ng-click="vm.openModal(comp._id)" ng-show="vm.isAdmin">
+                Edit
+            </button>
+        </h3>
+    </div>
+    <div class="panel-body">
+        <label>
+            Date:
+        </label>
+        {{comp.date}}
+        <br/>
+        <label>
+            Place:
+        </label>
+        {{comp.place}}
+        <br/>
+        <label>
+            Organizer:
+        </label>
+        {{comp.organizer}}
+        <br/>       
+        <p>
+            {{comp.description}}
+        </p>
+        <label>
+            Rules/Documentation
+        </label>
+        {{comp.doc_src}}
+    </div>
+</div>
+<div aria-hidden="true" aria-labelledby="myModalLabel" class="modal fade" id="signUpModal" role="dialog" tabindex="-1">
+    <form method="post">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button aria-label="Close" class="close" data-dismiss="modal" type="button">
+                        <span aria-hidden="true">
+                            ×
+                        </span>
+                    </button>
+                    <h4 class="modal-title" id="myModalLabel">
+                        Sign up players
+                    </h4>
+                </div>
+                <div class="modal-body">
+                    <div class="form-container">
+                        <h4>Signed players</h4>
+                       <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>
+                                        Cancel
+                                    </th>
+                                    <th>
+                                       First name
+                                    </th>
+                                    <th>
+                                        Last name
+                                    </th>
+                                    <th>
+                                        Age
+                                    </th>
+                                    <th>
+                                        Weight
+                                    </th>                                                                       
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="splayer in vm.signedPlayers">
+                                    <td>
+                                        <button ng-click="vm.cancelPlayer(splayer, $index)"><i class="fa fa-minus fa-2"></i></button>
+                                    </td>
+                                    <td>
+                                        {{splayer.firstname}}
+                                    </td>
+                                    <td>
+                                        {{splayer.lastname}}
+                                    </td>
+                                    <td>
+                                        {{splayer.age}}
+                                    </td>
+                                    <td>
+                                        {{splayer.weight}}
+                                    </td>                                                                    
+                                </tr>
+                            </tbody>
+                        </table>
+                        <h4>Aviable players</h4>
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>
+                                        Add
+                                    </th>
+                                    <th>
+                                       First name
+                                    </th>
+                                    <th>
+                                        Last name
+                                    </th>
+                                    <th>
+                                        Age
+                                    </th>
+                                    <th>
+                                        Weight
+                                    </th>                                                                       
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="player in vm.players">
+                                     <td>
+                                        <button ng-click="vm.signPlayer(player, $index)"><i class="fa fa-plus fa-2"></i></button>
+                                    </td>
+                                    <td>
+                                        {{player.firstname}}
+                                    </td>
+                                    <td>
+                                        {{player.lastname}}
+                                    </td>
+                                    <td>
+                                        {{player.age}}
+                                    </td>
+                                    <td>
+                                        {{player.weight}}
+                                    </td>                                                                    
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" data-dismiss="modal" type="button">
+                        Close
+                    </button>
+                    <button class="btn btn-primary" ng-click="vm.addPlayersToCompetition()" type="button">
+                        Save changes
+                    </button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+<div aria-hidden="true" aria-labelledby="myModalLabel" class="modal fade" id="myModal" role="dialog" tabindex="-1">
+    <form method="post">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button aria-label="Close" class="close" data-dismiss="modal" type="button">
+                        <span aria-hidden="true">
+                            ×
+                        </span>
+                    </button>
+                    <h4 class="modal-title" id="myModalLabel" ng-show="vm.edit">
+                        Edit Competition
+                    </h4>
+                    <h4 class="modal-title" id="myModalLabel" ng-show="!vm.edit">
+                        Add Competition
+                    </h4>
+                </div>
+                <div class="modal-body">
+                    <div class="form-container">
+                        <div class="form-group">
+                            <label for="competition.name">
+                                Name
+                            </label>
+                            <input class="form-control" id="competition.name" ng-model="vm.competition.name" required="" type="text"/>
+                        </div>
+                        <div class="form-group">
+                            <label for="competition.date">
+                                Date
+                            </label>
+                            <input class="form-control datepicker" data-date-format="mm/dd/yyyy" id="competition.date" ng-model="vm.competition.date" type="text"/>
+                        </div>
+                        <div class="form-group">
+                            <label for="competition.place">
+                                Place
+                            </label>
+                            <input class="form-control" id="competition.place" ng-model="vm.competition.place" type="text"/>
+                        </div>
+                        <div class="form-group">
+                            <label for="competition.organizer">
+                                Organizer
+                            </label>
+                            <input class="form-control" id="competition.organizer" ng-model="vm.competition.organizer" type="text"/>
+                        </div>
+                        <div class="form-group">
+                            <label for="competition.description">
+                                Description
+                            </label>
+                            <textarea class="form-control" id="competition.description" ng-model="vm.competition.description" rows="4">
+                            </textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="competition.doc_src">
+                                Rules/Documentation
+                            </label>
+                            <input class="form-control" id="competition.doc_src" ng-model="vm.competition.doc_src" type="text"/>
+                        </div>
+                        <div class="form-group">
+                            <label for="competition.deadline_record">
+                                Deadline record
+                            </label>
+                            <input class="form-control datepicker" data-date-format="mm/dd/yyyy" id="competition.deadline_record" ng-model="vm.competition.deadline_record" type="text"/>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" data-dismiss="modal" type="button">
+                        Close
+                    </button>
+                    <button class="btn btn-primary" ng-click="vm.editCompetition(vm.competition._id)" ng-show="vm.edit" type="button">
+                        Save changes
+                    </button>
+                    <button class="btn btn-primary" ng-click="vm.addCompetition()" ng-show="!vm.edit" type="button">
+                        Save changes
+                    </button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+<div aria-hidden="true" aria-labelledby="myModalLabel" class="modal fade" id="competitorsModal" role="dialog" tabindex="-1">
+    <form method="post">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button aria-label="Close" class="close" data-dismiss="modal" type="button">
+                        <span aria-hidden="true">
+                            ×
+                        </span>
+                    </button>
+                    <h4 class="modal-title" id="myModalLabel">
+                        All competitors
+                    </h4>
+                </div>
+                <div class="modal-body">
+                    <div class="form-container"> 
+                        <h4 class="players-count">Count: {{vm.allCompetitors.length}}</h4>                      
+                        <table class="table">
+                            <thead>
+                                <tr>                                   
+                                    <th>
+                                        First name
+                                    </th>
+                                    <th>
+                                        Last name
+                                    </th>
+                                    <th>
+                                        Age
+                                    </th>
+                                    <th>
+                                        Weight
+                                    </th>    
+                                    <th>
+                                        Nationality
+                                    </th> 
+                                    <th>
+                                        Sex
+                                    </th>   
+                                    <th>
+                                        Club name
+                                    </th>                                                                      
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="competitor in vm.allCompetitors | orderBy:'clubname'| orderBy:'weight'">                                   
+                                    <td>
+                                        {{competitor.firstname}}
+                                    </td>
+                                    <td>
+                                        {{competitor.lastname}}
+                                    </td>
+                                    <td>
+                                        {{competitor.age}}
+                                    </td>
+                                    <td>
+                                        {{competitor.weight | number}}
+                                    </td>   
+                                    <td>
+                                        {{competitor.nationality}}
+                                    </td>  
+                                    <td>
+                                        {{competitor.sex}}
+                                    </td>   
+                                    <td>
+                                        {{competitor.clubname}}
+                                    </td>                                                                    
+                                </tr>
+                            </tbody>
+                        </table>                        
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" data-dismiss="modal" type="button">
+                        Close
+                    </button>                   
+                </div>
+            </div>
+        </div>
+    </form>
+</div>

@@ -1,0 +1,11 @@
+﻿article.content h2 {
+	margin-bottom: 30px;
+}
+
+.action-col{
+	text-align: right;
+}
+
+.table-responsive th {
+	text-align: center;
+}

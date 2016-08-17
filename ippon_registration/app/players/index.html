@@ -1,0 +1,143 @@
+<h3>
+    Your players
+</h3>
+<div class="main-action-container">
+    <button class="btn btn-primary btn-sm" ng-click="vm.openModal()" >
+        Add player
+    </button>
+</div>
+<table class="table">
+    <thead>
+      <tr>
+        <th>First name</th>
+        <th>Last name</th>
+        <th>Age</th>
+        <th>Weight</th>
+        <th>Nationality</th>
+        <th>Sex</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr ng-repeat="player in vm.players">
+        <td>{{player.firstname}}</td>
+        <td>{{player.lastname}}</td>
+        <td>{{player.age}}</td>
+        <td>{{player.weight}}</td>
+        <td>{{player.nationality}}</td>
+        <td>{{player.sex}}</td>    
+        <td> 
+            <button class="btn btn-primary btn-sm" ng-click="vm.openModal(player._id)">
+                Edit
+            </button>
+            <button class="btn btn-danger btn-sm" ng-click="vm.deletePlayer(player._id)">
+                Delete
+            </button>           
+        </td>        
+      </tr>     
+    </tbody>
+  </table>
+<div aria-hidden="true" aria-labelledby="myModalLabel" class="modal fade" id="myModal" role="dialog" tabindex="-1">
+    <form method="post">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button aria-label="Close" class="close" data-dismiss="modal" type="button">
+                        <span aria-hidden="true">
+                            ×
+                        </span>
+                    </button>
+                    <h4 class="modal-title" id="myModalLabel" ng-show="vm.edit">
+                        Edit Player
+                    </h4>
+                    <h4 class="modal-title" id="myModalLabel" ng-show="!vm.edit">
+                        Add Player
+                    </h4>
+                </div>
+                <div class="modal-body">
+                    <div class="form-container">
+                        <div class="form-group">
+                            <label for="player.firstname">
+                                First name
+                            </label>
+                            <input class="form-control" id="player.firstname" ng-model="vm.player.firstname" required="" type="text"/>
+                        </div>
+                        <div class="form-group">
+                            <label for="player.lastname">
+                                Last name
+                            </label>
+                            <input class="form-control" id="player.lastname" ng-model="vm.player.lastname" required="" type="text"/>
+                        </div>
+                        <div class="form-group">
+                            <label for="player.age">
+                                Age
+                            </label>
+                            <input class="form-control" id="player.age" ng-model="vm.player.age" required="" type="text"/>
+                        </div>
+                        <div class="form-group">
+                            <label for="player.weight">
+                                Weight
+                            </label>
+                            <input class="form-control" id="player.weight" ng-model="vm.player.weight" required="" type="text"/>
+                        </div>
+                        <div class="form-group">
+                            <label for="player.nationality">
+                                Nationality
+                            </label>                            
+                            <select class="form-control" id="player.nationality" ng-model="vm.player.nationality" >
+                                <option value="POL" selected>
+                                    POL
+                                </option>
+                               <option value="POL">
+                                    POL
+                                </option>
+                                <option value="BLR">
+                                    BLR
+                                </option>
+                                <option value="UKR">
+                                    UK
+                                </option>
+                                <option value="RUS">
+                                    RUS
+                                </option>
+                                <option value="LTV">
+                                    LTV
+                                </option>
+                                <option value="GER">
+                                    GER
+                                </option>
+                                <option value="OTHER">
+                                    OTHER
+                                </option>                              
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="player.sex">
+                                Sex
+                            </label>                            
+                            <select class="form-control" id="player.sex" ng-model="vm.player.sex">
+                                <option value="male" selected>
+                                    MALE
+                                </option>
+                                <option value="female">
+                                    FEMALE
+                                </option>                                
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" data-dismiss="modal" type="button">
+                        Close
+                    </button>
+                    <button class="btn btn-primary" ng-click="vm.editPlayer(vm.player._id)" ng-show="vm.edit" type="button">
+                        Save changes
+                    </button>
+                    <button class="btn btn-primary" ng-click="vm.addPlayer()" ng-show="!vm.edit" type="button">
+                        Save changes
+                    </button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>

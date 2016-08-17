@@ -1,0 +1,189 @@
+﻿<%- include('partials/auth/header') %>
+<!-- <div class="auth">
+    <div class="auth-container">
+        <div class="card">
+            <header class="auth-header">
+                <h1 class="auth-title">
+                    <div class="logo">
+                        <span class="l l1">
+                        </span>
+                        <span class="l l2">
+                        </span>
+                        <span class="l l3">
+                        </span>
+                        <span class="l l4">
+                        </span>
+                        <span class="l l5">
+                        </span>
+                    </div>
+                    Fusion Learning 
+                </h1>
+            </header>
+            <div class="auth-content">
+                <p class="text-xs-center">
+                    SIGNUP TO GET INSTANT ACCESS
+                </p>
+                <% if(locals.error) { %>
+                    <div class="alert alert-danger"><%= error %></div>
+                <% } %>
+                <form method="post">
+                    <div class="form-group">
+                        <label for="firstname">
+                            Name
+                        </label>
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <input class="form-control underlined" id="firstname" name="firstname" placeholder="Enter firstname" value="<%= locals.firstname || '' %>" required type="text">
+                                </input>
+                            </div>
+                            <div class="col-sm-6">
+                                <input class="form-control underlined" id="lastname" name="lastname" placeholder="Enter lastname" value="<%= locals.lastname || '' %>" required type="text">
+                                </input>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="username">
+                            User name
+                        </label>
+                        <input class="form-control underlined" id="username" name="username" placeholder="Enter username" value="<%= locals.username || '' %>" required type="text">
+                        </input>
+                    </div>
+                    <div class="form-group">
+                        <label for="password">
+                            Password
+                        </label>
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <input class="form-control underlined" id="password" name="password" placeholder="Enter password" required="" type="password">
+                                </input>
+                            </div>
+                            <div class="col-sm-6">
+                                <input class="form-control underlined" id="retype_password" name="retype_password" placeholder="Re-type password" required="" type="password">
+                                </input>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="agree">
+                            <input class="checkbox" id="agree" name="agree" required="" type="checkbox">
+                                <span>
+                                    Agree the terms and
+                                    <a href="#">
+                                        policy
+                                    </a>
+                                </span>
+                            </input>
+                        </label>
+                    </div>
+                    <div class="form-group">
+                        <button class="btn btn-block btn-primary" type="submit">
+                            Sign Up
+                        </button>
+                    </div>
+                    <div class="form-group">
+                        <p class="text-muted text-xs-center">
+                            Already have an account?
+                            <a href="/login">
+                                Login!
+                            </a>
+                        </p>
+                    </div>
+                </form>
+            </div>
+        </div>      
+    </div>
+</div> -->
+<div class="mainbox col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2" id="signupbox" style=" margin-top:50px">
+    <% if(locals.error) { %>
+    <div class="alert alert-danger">
+        <%= error %>
+    </div>
+    <% } %>
+    <div class="panel panel-info">
+        <div class="panel-heading">
+            <div class="panel-title">
+                Sign Up
+            </div>
+            <div style="float:right; font-size: 85%; position: relative; top:-10px">
+                <a href="/login" id="signinlink">
+                    Sign In
+                </a>
+            </div>
+        </div>
+        <div class="panel-body">
+            <form class="form-horizontal" id="signupform" role="form" method="post">
+                <div class="alert alert-danger" id="signupalert" style="display:none">
+                    <p>
+                        Error:
+                    </p>
+                    <span>
+                    </span>
+                </div>
+                <div class="form-group">
+                    <label class="col-md-3 control-label" for="email">
+                        Email
+                    </label>
+                    <div class="col-md-9">
+                        <input class="form-control" name="email" placeholder="Email Address" type="text">
+                        </input>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-md-3 control-label" for="firstname">
+                        First Name
+                    </label>
+                    <div class="col-md-9">
+                        <input class="form-control" name="firstname" placeholder="First Name" type="text">
+                        </input>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-md-3 control-label" for="lastname">
+                        Last Name
+                    </label>
+                    <div class="col-md-9">
+                        <input class="form-control" name="lastname" placeholder="Last Name" type="text">
+                        </input>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-md-3 control-label" for="password">
+                        Password
+                    </label>
+                    <div class="col-md-9">
+                        <input class="form-control" name="passwd" placeholder="Password" type="password">
+                        </input>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-md-3 control-label" for="clubname">
+                        Club Name
+                    </label>
+                    <div class="col-md-9">
+                        <input class="form-control" name="clubname" placeholder="" type="text">
+                        </input>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <!-- Button -->
+                    <div class="col-md-offset-3 col-md-9">
+                        <button class="btn btn-info" id="btn-signup" type="submit">
+                            <i class="icon-hand-right">
+                            </i>
+                            Sign Up
+                        </button>
+                    </div>
+                </div>
+                <!-- <div style="border-top: 1px solid #999; padding-top:20px"  class="form-group">
+                                    
+                                    <div class="col-md-offset-3 col-md-9">
+                                        <button id="btn-fbsignup" type="button" class="btn btn-primary"><i class="icon-facebook"></i>   Sign Up with Facebook</button>
+                                    </div>                                           
+                                        
+                                </div> -->
+            </form>
+        </div>
+    </div>
+</div>
+<%- include('partials/auth/footer') %>

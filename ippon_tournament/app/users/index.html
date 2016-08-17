@@ -1,0 +1,115 @@
+<article class="content items-list-page">
+    <h3>
+        Users
+    </h3>
+    <section class="section">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-block">
+                      <!--   <button class="btn btn-primary" ng-click="vm.openModal()" type="button">
+                            Add Post
+                        </button> -->
+                        <div class="table-responsive">
+                            <table class="table table-striped table-bordered table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>
+                                            first name
+                                        </th>
+                                        <th>
+                                            last name
+                                        </th>
+                                        <th>
+                                            user name
+                                        </th>                                        
+                                        <th width="250px">
+                                            actions
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="user in vm.users">
+                                        <td>
+                                            {{user.firstname}}
+                                        </td>
+                                        <td>
+                                            {{user.lastname}}
+                                        </td>
+                                        <td>
+                                            {{user.username}}
+                                        </td>                                       
+                                        <td class="action-col">
+                                            <button class="btn btn-primary btn-sm" ng-click="vm.openModal(user._id)">
+                                                Edit User
+                                            </button>
+                                            <button class="btn btn-danger btn-sm" ng-click="vm.deleteUser(user._id)">
+                                                Delete User
+                                            </button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</article>
+<!-- NEW MODAL -->
+<div aria-hidden="true" aria-labelledby="myModalLabel" class="modal fade" id="myModal" role="dialog" tabindex="-1">
+    <form method="post">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button aria-label="Close" class="close" data-dismiss="modal" type="button">
+                        <span aria-hidden="true">
+                            ×
+                        </span>
+                    </button>
+                    <h4 class="modal-title" id="myModalLabel" ng-show="vm.edit">
+                        Edit User
+                    </h4>
+                    <h4 class="modal-title" id="myModalLabel" ng-show="!vm.edit">
+                        Add User
+                    </h4>
+
+                </div>
+                <div class="modal-body">
+                    <div class="form-container">
+                        <div class="form-group">
+                            <label for="user.firstname">
+                                First name
+                            </label>
+                            <input class="form-control underlined" id="user.firstname" ng-model="vm.user.firstname" required="" type="text"/>
+                        </div>
+                        <div class="form-group">
+                            <label for="user.lastname">
+                                Last name
+                            </label>
+                            <input class="form-control underlined" id="user.lastname" ng-model="vm.user.lastname" required="" type="text"/>
+                        </div>
+                        <div class="form-group">
+                            <label for="user.username">
+                                User name
+                            </label>
+                            <input class="form-control underlined" id="user.username" ng-model="vm.user.username" required="" type="text"/>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" data-dismiss="modal" type="button">
+                        Close
+                    </button>
+                    <button class="btn btn-primary" ng-click="vm.editUser(vm.user._id)" ng-show="vm.edit" type="button">
+                        Save changes
+                    </button>
+                    <button class="btn btn-primary" ng-click="vm.addUser()" ng-show="!vm.edit" type="button">
+                        Save changes
+                    </button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
