@@ -166,8 +166,8 @@ function generateFights(params) {
                                             console.log("Genereuj w systemie francuskim");
                                             players.forEach(function(player, index) {
                                                 if (index % 2 == 0) {
-                                                    if (players[key + 1] !== undefined) {
-                                                        createFight(players[key], players[key + 1], tatami.name, 3);
+                                                    if (players[index + 1] !== undefined) {
+                                                        createFight(players[index], players[index + 1], tatami.name, 3);
                                                     }
                                                 }
                                             });

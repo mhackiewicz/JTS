@@ -5,9 +5,12 @@
 <button class="btn btn-primary" ng-click="vm.generateFights()"  ng-show="vm.fights.length == 0">
     Generate fights
 </button>
+<button class="btn btn-primary" ng-click="vm.showFightList()"  ng-show="vm.fights.length != 0">
+    Show fight lists
+</button>
 <label class="search-label">Search: <input ng-model="searchText"></label>
 <br/>
-<table class="table" style="width:80%">
+<table class="table">
     <thead>
         <tr>         
             <th>
@@ -51,9 +54,9 @@
                 {{fight.tatami}}
             </td>
             <td style="text-align:right">
-                <button class="btn btn-sm btn-primary"  ng-click="vm.openModal(fight._id)">
+              <!--   <button class="btn btn-sm btn-primary"  ng-click="vm.openModal(fight._id)">
                     Edit
-                </button>                
+                </button>       -->          
                 <button class="btn btn-sm btn-danger" ng-click="vm.deleteFight(fight._id)">
                     Delete
                 </button>

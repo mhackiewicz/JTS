@@ -93,7 +93,7 @@ function addCategories(_id, categorie) {
         if (err) deferred.reject(err.name + ': ' + err.message);
         updateTatami();
     });
-
+    console.log(categorie)
     function updateTatami() {       
         var set = {
             categories: categorie

@@ -37,8 +37,7 @@
             data: {
                 activeTab: 'players'
             }
-        })
-        .state('judges', {
+        }).state('judges', {
             url: '/judges',
             templateUrl: 'judges/index.html',
             controller: 'Judges.IndexController',
@@ -46,8 +45,7 @@
             data: {
                 activeTab: 'judges'
             }
-        })
-        .state('categories', {
+        }).state('categories', {
             url: '/categories',
             templateUrl: 'categories/index.html',
             controller: 'Categories.IndexController',
@@ -55,8 +53,7 @@
             data: {
                 activeTab: 'categories'
             }
-        })
-        .state('verification', {
+        }).state('verification', {
             url: '/verification',
             templateUrl: 'verification/index.html',
             controller: 'Verification.IndexController',
@@ -64,8 +61,7 @@
             data: {
                 activeTab: 'verification'
             }
-        })
-         .state('weight', {
+        }).state('weight', {
             url: '/weight',
             templateUrl: 'weight/index.html',
             controller: 'Weight.IndexController',
@@ -73,18 +69,23 @@
             data: {
                 activeTab: 'weight'
             }
-        })
-         .state('fights', {
+        }).state('fights', {
             url: '/fights',
             templateUrl: 'fights/index.html',
             controller: 'Fights.IndexController',
             controllerAs: 'vm',
             data: {
-                activeTab: 'Fights'
+                activeTab: 'fights'
+            }
+        }).state('fights-service', {
+            url: '/fights-service',
+            templateUrl: 'fights_service/index.html',
+            controller: 'FightsService.IndexController',
+            controllerAs: 'vm',
+            data: {
+                activeTab: 'fights-service'
             }
         });
-
-        
     }
 
     function run($http, $rootScope, $window) {
@@ -121,25 +122,24 @@
                     $location.path('/verification')
                 } else if (user.role == 'fight_service') {
                     vm.isFightService = true;
-                    $location.path('/fight-service')
+                    $location.path('/fights-service')
                 } else if (user.role == 'results_preview') {
                     vm.isResultsPreview = true;
                     $location.path('/results-preview')
                 }
             });
-            getAllCompetitions();          
-
+            getAllCompetitions();
         }
 
         function getAllCompetitions() {
-            CompetitionService.GetAll().then(function(result) {               
-                vm.competitions = result;                
+            CompetitionService.GetAll().then(function(result) {
+                vm.competitions = result;
                 if (localStorage.actualCompetition) {
                     angular.forEach(result, function(value, key) {
-                        if(value._id == localStorage.actualCompetition){
+                        if (value._id == localStorage.actualCompetition) {
                             vm.actualCompetition = vm.competitions[key];
-                        }                       
-                    });                  
+                        }
+                    });
                 } else {
                     localStorage.setItem("actualCompetition", vm.competitions[0]._id);
                 }
