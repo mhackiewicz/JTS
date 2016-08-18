@@ -18,6 +18,7 @@ service.update = update;
 service.delete = _delete;
 service.addJudges = addJudges;
 service.addCategories = addCategories;
+service.addStaff = addStaff;
 module.exports = service;
 
 function getAll(_id) {
@@ -70,10 +71,7 @@ function addJudges(_id, judge) {
         updateTatami();
     });
 
-    function updateTatami() {
-        console.log("updateTatami")
-        console.log(_id)
-        // fields to update
+    function updateTatami() {       
         var set = {
             judges: judge
         };
@@ -96,12 +94,32 @@ function addCategories(_id, categorie) {
         updateTatami();
     });
 
-    function updateTatami() {
-        console.log("updateTatami")
-        console.log(_id)
-        // fields to update
+    function updateTatami() {       
         var set = {
             categories: categorie
+        };
+        db.tatamis.update({
+            _id: mongo.helper.toObjectID(_id)
+        }, {
+            $set: set
+        }, function(err, doc) {
+            if (err) deferred.reject(err.name + ': ' + err.message);
+            deferred.resolve();
+        });
+    }
+    return deferred.promise;
+}
+
+function addStaff(_id, staff) {
+    var deferred = Q.defer();
+    db.tatamis.findById(_id, function(err, tatami) {
+        if (err) deferred.reject(err.name + ': ' + err.message);
+        updateTatami();
+    });
+
+    function updateTatami() {     
+        var set = {
+            staff: staff
         };
         db.tatamis.update({
             _id: mongo.helper.toObjectID(_id)

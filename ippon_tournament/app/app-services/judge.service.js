@@ -17,14 +17,11 @@
         return service;
       
 
-        function GetAll(compId) {
-            console.log("Get ALL");
+        function GetAll(compId) {            
             return $http.post('/api/judges/getAll', {competitionId: compId}).then(handleSuccess, handleError);
         }
        
-        function GetById(_id) {
-            console.log("GetById");
-            console.log(_id);
+        function GetById(_id) {         
             return $http.get('/api/judges/' + _id).then(handleSuccess, handleError);
         }
        

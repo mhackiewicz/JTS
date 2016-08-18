@@ -45,12 +45,12 @@
                 <ul class="nav navbar-nav">
                     <li>
                      
-                        <select ng-show="main.isAdmin" class="form-control" id="selectTournament"  ng-change="main.changeCompetition(main.actualCompetition)" ng-model="main.actualCompetition" ng-options="competition as competition.name for competition in  main.competitions">
+                        <select ng-show="!main.isFightService" class="form-control" id="selectTournament"  ng-change="main.changeCompetition(main.actualCompetition)" ng-model="main.actualCompetition" ng-options="competition as competition.name for competition in  main.competitions">
                         </select>
                     </li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
-                    <li>
+                    <li ng-show="main.isAdmin">
                         <a ui-sref="account">
                             Account
                         </a>
@@ -88,7 +88,7 @@
                         </a>
                     </li>
                     <li ng-show="main.isAdmin">
-                        <a href="#">
+                        <a ui-sref="fights">
                             Fights
                         </a>
                     </li>
@@ -102,8 +102,8 @@
                             Results
                         </a>
                     </li>
-                    <li ui-sref="staff">
-                        <a href="#">
+                    <li ng-show="main.isAdmin">
+                        <a ui-sref="staff">
                             Staff
                         </a>
                     </li>
@@ -169,6 +169,8 @@
     </script>
       <script src="app-services/categorie.service.js">
     </script>
+      <script src="app-services/fight.service.js">
+    </script>
     <script src="dashboard/index.controller.js">
     </script>
     <script src="judges/index.controller.js">
@@ -176,5 +178,13 @@
     <script src="players/index.controller.js">
     </script>
      <script src="categories/index.controller.js">
+    </script>
+    <script src="users/index.controller.js">
+    </script>
+     <script src="verification/index.controller.js">
+    </script>
+     <script src="weight/index.controller.js">
+    </script>
+     <script src="fights/index.controller.js">
     </script>
 </body>

@@ -124,7 +124,7 @@ body {
 }
 
 .yellow-status {
-  color: yellow;
+  color:  #e6ac00;
 }
 
 .blocked-status {
@@ -136,9 +136,13 @@ body {
 }
 
 .tatami-data-table {
-  width: 60%;
+ 
 }
 
 .tatami-data-table td {
   vertical-align: top;
+}
+
+.search-label {
+  float: right;
 }

@@ -10,6 +10,7 @@ router.get('/getJudges/:_id', getJudgeByTatamiId);
 router.post('/', createTatami);
 router.post('/addJudges',addJudgesToTatami);
 router.post('/addCategories',addCategoriesToTatami);
+router.post('/addStaff',addStaffToTatami);
 router.put('/:_id', updateTatami);
 router.delete('/:_id', deleteTatami);
 
@@ -95,6 +96,20 @@ function addCategoriesToTatami(req, res) {
             res.status(400).send(err);
         });
 }
+
+
+function addStaffToTatami(req, res) {
+    tatamiService.addStaff(req.body.staff, req.body._tatamiId)
+        .then(function () {           
+            res.sendStatus(200);
+        })
+        .catch(function (err) {
+            res.status(400).send(err);
+        });
+}
+
+
+
 
 function getJudgeByTatamiId(req, res) {   
     tatamiService.getJudgeByTatamiId(req.params._id)

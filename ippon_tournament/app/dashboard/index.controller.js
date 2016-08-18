@@ -2,7 +2,7 @@
     'use strict';
     angular.module('app').controller('Dashboard.IndexController', Controller);
 
-    function Controller($scope, $window, TatamiService, JudgeService, CategorieService, FlashService) {
+    function Controller($scope, $window, TatamiService, JudgeService, CategorieService, UserService, FlashService) {
         var vm = this;
         vm.tatami = {};
         vm.tatamis = [];
@@ -15,24 +15,26 @@
         vm.addStuff = addStuff;
         vm.saveJudgesOnTatami = saveJudgesOnTatami;
         vm.saveCategoriesOnTatami = saveCategoriesOnTatami;
+        vm.saveStaffOnTatami = saveStaffOnTatami;
         vm.actualTatami = null;
         vm.addingJudges = [];
+        vm.addingStaff = [];
         vm.judges = [];
-        vm.categories =[];
-        vm.addingCategories= [];
+        vm.staffs=[];
+        vm.categories = [];
+        vm.addingCategories = [];
         initController();
         var $judgesModal = angular.element('#addJudgesModal');
         var $stuffModal = angular.element('#addStuffModal');
-        var $fightsModal = angular.element('#addFightsModal');       
+        var $fightsModal = angular.element('#addFightsModal');
 
         function initController() {
-            getAllTatamis();            
+            getAllTatamis();
             angular.element('#judgesSelect').select2({
                 maximumSelectionLength: 3
             });
-
-             angular.element('#categoriesSelect').select2();
-
+            angular.element('#categoriesSelect').select2();
+            angular.element('#staffSelect').select2();
         }
 
         function editTatami() {
@@ -71,22 +73,27 @@
             }
         }
 
-        function getAllTatamis() {
-            vm.judges = [];
+        function getAllTatamis() {           
             TatamiService.GetAll(localStorage.actualCompetition).then(function(result) {
                 vm.tatamis = result;
             });
         }
 
-        function getAllJudges() {                   
+        function getAllJudges() {
             JudgeService.GetAll(localStorage.actualCompetition).then(function(result) {
-                vm.judges = result;                
+                vm.judges = result;
             });
         }
 
-         function getAllCategories() {                   
+        function getAllStaff() {
+            UserService.GetAllForTatamis(localStorage.actualCompetition).then(function(result) {
+                vm.staffs = result;
+            });
+        }
+
+        function getAllCategories() {
             CategorieService.GetAll(localStorage.actualCompetition).then(function(result) {
-                vm.categories = result;                
+                vm.categories = result;
             });
         }
 
@@ -104,23 +111,25 @@
             }
         }
 
-        function addJudges(id) {        
+        function addJudges(id) {
             vm.actualTatami = id;
-           getAllJudges();
+            getAllJudges();
             $judgesModal.modal();
         }
 
         function addFights(id) {
-             vm.actualTatami = id;
-           getAllCategories();           
+            vm.actualTatami = id;
+            getAllCategories();
             $fightsModal.modal();
         }
 
         function addStuff(id) {
+            vm.actualTatami = id;
+            getAllStaff();            
             $stuffModal.modal();
         }
 
-        function saveJudgesOnTatami() {           
+        function saveJudgesOnTatami() {
             TatamiService.AddJudges(vm.addingJudges, vm.actualTatami).then(function(reslut) {}).catch(function(error) {
                 FlashService.Error(error);
             });
@@ -128,13 +137,20 @@
             $judgesModal.modal("hide");
         }
 
-        function saveCategoriesOnTatami() {           
+        function saveCategoriesOnTatami() {
             TatamiService.AddCategories(vm.addingCategories, vm.actualTatami).then(function(reslut) {}).catch(function(error) {
                 FlashService.Error(error);
             });
             getAllTatamis();
             $fightsModal.modal("hide");
         }
-        
+
+        function saveStaffOnTatami() {
+            TatamiService.AddStaff(vm.addingStaff, vm.actualTatami).then(function(reslut) {}).catch(function(error) {
+                FlashService.Error(error);
+            });
+            getAllTatamis();
+            $stuffModal.modal("hide");
+        }
     }
 })();

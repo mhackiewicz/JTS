@@ -1,10 +1,11 @@
 <h3>
-    Players
+    Verification
 </h3>
 <br/>
-<button class="btn btn-primary" ng-click="vm.openModal()">
+<!-- <button class="btn btn-primary" ng-click="vm.openModal()">
     Add player
 </button>
+ -->
 <label class="search-label">Search: <input ng-model="searchText"></label>
 <br/>
 <table class="table">
@@ -65,7 +66,7 @@
                 <span class="blue-status">for verification</span>
             </td>
             <td ng-if="player.status=='for_weighting'">
-                <span class="yellow-status">weighting</span>                
+                <span class="yellow-status">weighing</span>                
             </td>
             <td ng-if="player.status=='ready'">
                 <span class="green-status">ready</span>
@@ -74,11 +75,9 @@
                 <span class="blocked-status">blocked</span>
             </td>
             <td>
-                <button class="btn btn-primary btn-sm" ng-click="vm.openModal(player._id)">
-                    Edit
-                </button>
-                <button class="btn btn-danger btn-sm" ng-click="vm.deletePlayer(player._id)">
-                    Delete
+               
+                <button class="btn btn-primary btn-sm" ng-click="vm.verifyPlayer(player)">
+                    Verify
                 </button>
             </td>
         </tr>

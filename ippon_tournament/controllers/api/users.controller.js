@@ -7,7 +7,8 @@ var userService = require('services/user.service');
 router.post('/authenticate', authenticateUser);
 router.post('/register', registerUser);
 router.get('/current', getCurrentUser);
-router.get('/', getAllUsers);
+router.post('/getAll/', getAllUsers);
+router.post('/getAllForTatamis/', getAllUsersForTatamis);
 router.get('/:_id', getUser);
 router.put('/:_id', updateUser);
 router.delete('/:_id', deleteUser);
@@ -56,7 +57,7 @@ function getUser(req, res) {
 
 
 function getAllUsers(req, res) {    
-    userService.getAll()
+    userService.getAll(req.body.competitionId)
         .then(function (user) {
 
             if (user) {
@@ -70,6 +71,24 @@ function getAllUsers(req, res) {
             res.status(400).send(err);
         });
 }
+
+function getAllUsersForTatamis(req, res) {    
+    userService.getAllForTatamis(req.body.competitionId)
+        .then(function (user) {
+
+            if (user) {
+                //console.log(post); 
+                res.send(user);
+            } else {
+                res.sendStatus(404);
+            }
+        })
+        .catch(function (err) {
+            res.status(400).send(err);
+        });
+}
+
+
 
 function getCurrentUser(req, res) {
     userService.getById(req.user.sub)
@@ -86,12 +105,6 @@ function getCurrentUser(req, res) {
 }
 
 function updateUser(req, res) {
-    //var userId = req.user.sub;
-    // if (req.params._id !== userId) {
-    //     // can only update own account
-    //     return res.status(401).send('You can only update your own account');
-    // }
-
     userService.update(req.params._id, req.body)
         .then(function () {
             res.sendStatus(200);
@@ -102,13 +115,7 @@ function updateUser(req, res) {
 }
 
 function deleteUser(req, res) {
-    var userId = req.user.sub;
-    if (req.params._id !== userId) {
-        // can only delete own account
-        return res.status(401).send('You can only delete your own account');
-    }
-
-    userService.delete(userId)
+    userService.delete(req.params._id)
         .then(function () {
             res.sendStatus(200);
         })

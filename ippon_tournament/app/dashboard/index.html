@@ -16,7 +16,7 @@
                 
             </th> -->
             <th style="width:60%">
-                Name
+                Details
             </th>
             <th>
             </th>
@@ -32,49 +32,35 @@
             </td> -->
             <td>
                 <table class="tatami-data-table" width="100%">
-                    <tr>
-                        <td>
-                            <label>
-                                Name:
-                            </label>
-                            <br/>
-                            {{tatami.name}}
-                        </td>
-                        <td>
-                            <label>
-                                Judges:
-                            </label>
-                            <br/>
-                            <span ng-repeat="judge in tatami.judges">
+                    <thead>
+                        <tr>
+                            <th>Name:</th>
+                            <th width="200px">Judges:</th>
+                            <th>Categories:</th>
+                            <th>Staff:</th>
+                        </tr>
+
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>{{tatami.name}}</td>
+                            <td><span ng-repeat="judge in tatami.judges">
                                 {{judge.firstname}}
-                    			{{judge.lastname}}
+                                {{judge.lastname}}
                                 <br/>
-                            </span>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <label>
-                                Categories:
-                            </label>
-                            <br/>
-                            <span ng-repeat="cat in tatami.categories">
+                            </span></td>
+                            <td><span ng-repeat="cat in tatami.categories">
                                 {{cat.name}}
                                 <br/>
-                            </span>
-                        </td>
-                        <td>
-                            <label>
-                                Stuff:
-                            </label>
-                            <br/>
-                            <span ng-repeat="stuff in tatami.stuff">
-                                {{stuff.name}}                    			
+                            </span></td>
+                            <td><span>
+                                {{tatami.staff.email}}                              
                                 <br/>
-                            </span>
-                        </td>
-                    </tr>
-                </table>
+                            </span></td>
+                        </tr>
+                        
+                    </tbody>
+                </table>                
             </td>
             <td style="text-align:right">
                 <button class="btn btn-sm btn-primary" ng-click="vm.addJudges(tatami._id)">
@@ -111,7 +97,7 @@
                     <div class="form-container">
                         <div class="form-group">
                             <label for="">
-                                Judges
+                                Select judges
                             </label>
                             <!-- <input class="form-control" id="player.firstname" ng-model="vm.player.firstname" required="" type="text"/> -->
                             <select class="form-control" id="judgesSelect" multiple="multiple" ng-change="vm.changeJudges(vm.actualTatami)" ng-model="vm.addingJudges" ng-options="judge as judge.firstname + ' ' + judge.lastname for judge in  vm.judges">
@@ -154,9 +140,9 @@
                     <div class="form-container">
                         <div class="form-group">
                             <label>
-                                Categories
+                                Select categories
                             </label>
-                            <select class="form-control" id="categoriesSelect" multiple="multiple" ng-model="vm.addingCategories" ng-options="categorie as categorie.name + ' ('+categorie.sex +')' for categorie in  vm.categories">
+                            <select class="form-control" id="categoriesSelect" multiple="multiple" ng-model="vm.addingCategorie" ng-options="categorie as categorie.name + ' ('+categorie.sex +')' for categorie in  vm.categories">
                             </select>
                         </div>
                     </div>
@@ -190,10 +176,10 @@
                 <div class="modal-body">
                     <div class="form-container">
                         <div class="form-group">
-                            <label for="player.firstname">
-                                First name
+                            <label>
+                                Select staff
                             </label>
-                            <input class="form-control" id="player.firstname" ng-model="vm.player.firstname" required="" type="text"/>
+                             <select class="form-control" id="staffSelect"  ng-model="vm.addingStaff" ng-options="staff as staff.email for staff in  vm.staffs"/>
                         </div>
                     </div>
                 </div>
@@ -201,10 +187,7 @@
                     <button class="btn btn-secondary" data-dismiss="modal" type="button">
                         Close
                     </button>
-                    <button class="btn btn-primary" ng-click="vm.editPlayer(vm.player._id)" ng-show="vm.edit" type="button">
-                        Save changes
-                    </button>
-                    <button class="btn btn-primary" ng-click="vm.addPlayer()" ng-show="!vm.edit" type="button">
+                   <button class="btn btn-primary" ng-click="vm.saveStaffOnTatami()" type="button">
                         Save changes
                     </button>
                 </div>

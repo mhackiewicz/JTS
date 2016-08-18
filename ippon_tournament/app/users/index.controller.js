@@ -6,7 +6,7 @@
         var vm = this;
         vm.user = null;
         vm.users = [];
-        vm.addUser = addUser;       
+        vm.addUser = addUser;
         vm.openModal = openModal;
         vm.editUser = editUser;
         vm.deleteUser = deleteUser;
@@ -17,8 +17,7 @@
             getAllUsers();
         }
 
-        function editUser() {    
-
+        function editUser() {
             UserService.Update(vm.user).then(function() {
                 FlashService.Success('User updated');
                 console.log('User updated');
@@ -27,11 +26,11 @@
             }).catch(function(error) {
                 FlashService.Error(error);
             });
-        }      
+        }
 
         function addUser() {
-           // console.log(vm.user);           
-            UserService.Create(vm.user).then(function(reslut) {                
+            vm.user._competitionId = localStorage.actualCompetition;
+            UserService.Create(vm.user).then(function(reslut) {
                 FlashService.Success('User created');
                 getAllUsers();
                 $modal.modal("hide")
@@ -51,24 +50,24 @@
         }
 
         function getAllUsers() {
-            UserService.GetAll().then(function(result) {
+            UserService.GetAll(localStorage.actualCompetition).then(function(result) {
                 vm.users = result;
             });
         }
 
-        function openModal(id){
-            if(id){
+        function openModal(id) {
+            if (id) {
                 UserService.GetById(id).then(function(result) {
                     vm.user = result;
                     vm.edit = true;
                     $modal.modal();
                 });
-            }else{
-                vm.user = null;
+            } else {
+                vm.user = {};
+                vm.user.role = 'verification';
                 vm.edit = false;
                 $modal.modal();
             }
-
         }
     }
 })();

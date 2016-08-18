@@ -16,16 +16,27 @@
         service.AddToCompetition = AddToCompetition;
         service.DeleteFromCompetition = DeleteFromCompetition;
         service.GetSignedPlayers = GetSignedPlayers;
+        service.GetAllForVerify = GetAllForVerify;
+        service.GetAllForWeighting = GetAllForWeighting;
 
         return service;
       
 
-        function GetAll(compId) {
-            console.log("Get ALL");
+        function GetAll(compId) {          
             return $http.post('/api/players/getAll', {competitionId: compId}).then(handleSuccess, handleError);
         }
 
+        function GetAllForVerify(compId) {            
+            return $http.post('/api/players/getAllForVerify', {competitionId: compId}).then(handleSuccess, handleError);
+        }  
+
+        function GetAllForWeighting(compId) {            
+            return $http.post('/api/players/getAllForWeighting', {competitionId: compId}).then(handleSuccess, handleError);
+        }        
+        
+
         function GetById(_id) {
+            console.log("GET PLAYER");
             return $http.get('/api/players/' + _id).then(handleSuccess, handleError);
         }
        
@@ -36,7 +47,7 @@
 
         function Update(player) {
             return $http.put('/api/players/' + player._id, player).then(handleSuccess, handleError);
-        }
+        }    
 
         function Delete(_id) {
             return $http.delete('/api/players/' + _id).then(handleSuccess, handleError);

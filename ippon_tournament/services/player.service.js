@@ -21,11 +21,12 @@ service.update = update;
 service.delete = _delete;
 service.addToCompetition = addToCompetition;
 service.deleteFromCompetition = deleteFromCompetition;
+service.getAllForVerify = getAllForVerify;
+service.getAllForWeighting = getAllForWeighting;
 module.exports = service;
 
 function getAll(_id) {
-    var deferred = Q.defer();
-    console.log("getAll");
+    var deferred = Q.defer();   
     db.competition_players.find({
         _competitionId: _id
     }).toArray(function(err, player) {
@@ -38,6 +39,39 @@ function getAll(_id) {
     });
     return deferred.promise;
 }
+
+function getAllForVerify(_id) {
+    var deferred = Q.defer();   
+    db.competition_players.find({
+        _competitionId: _id,
+        status : 'for_verification'
+    }).toArray(function(err, player) {
+        if (err) deferred.reject(err.name + ': ' + err.message);
+        if (player) {            
+            deferred.resolve(player);
+        } else {
+            deferred.resolve();
+        }
+    });
+    return deferred.promise;
+}
+
+function getAllForWeighting(_id) {
+    var deferred = Q.defer();   
+    db.competition_players.find({
+        _competitionId: _id,
+        status : 'for_weighting'
+    }).toArray(function(err, player) {
+        if (err) deferred.reject(err.name + ': ' + err.message);
+        if (player) {            
+            deferred.resolve(player);
+        } else {
+            deferred.resolve();
+        }
+    });
+    return deferred.promise;
+}
+
 
 function getSignedPlayers(_userId, _competitionId) {
     var deferred = Q.defer();
@@ -57,8 +91,8 @@ function getSignedPlayers(_userId, _competitionId) {
 function getUnsignedPlayers(_userId, _competitionId) {}
 
 function getById(_id) {
-    var deferred = Q.defer();
-    db.players.findById(_id, function(err, player) {
+    var deferred = Q.defer();   
+    db.competition_players.findById(_id, function(err, player) {
         if (err) deferred.reject(err.name + ': ' + err.message);
         if (player) {
             deferred.resolve(player);
@@ -76,7 +110,7 @@ function create(playerParam) {
 
     function createPlayer() {
         var player = playerParam
-        db.players.insert(player, function(err, doc) {
+        db.competition_players.insert(player, function(err, doc) {
             if (err) deferred.reject(err.name + ': ' + err.message);
             deferred.resolve();
         });
@@ -86,22 +120,23 @@ function create(playerParam) {
 
 function update(_id, playerParam) {
     var deferred = Q.defer();
-    db.players.findById(_id, function(err, player) {
+    db.competition_players.findById(_id, function(err, player) {
         if (err) deferred.reject(err.name + ': ' + err.message);
         updatePlayer();
     });
 
     function updatePlayer() {
-        // fields to update
+        // fields to update       
         var set = {
             firstname: playerParam.firstname,
             lastname: playerParam.lastname,
             age: playerParam.age,
             weight: playerParam.weight,
             nationality: playerParam.nationality,
-            sex: playerParam.sex
+            sex: playerParam.sex,
+            status: playerParam.status
         };
-        db.players.update({
+        db.competition_players.update({
             _id: mongo.helper.toObjectID(_id)
         }, {
             $set: set
@@ -115,7 +150,7 @@ function update(_id, playerParam) {
 
 function _delete(_id) {
     var deferred = Q.defer();
-    db.players.remove({
+    db.competition_players.remove({
         _id: mongo.helper.toObjectID(_id)
     }, function(err) {
         if (err) deferred.reject(err.name + ': ' + err.message);

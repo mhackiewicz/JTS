@@ -27,6 +27,7 @@ app.use('/api/players', require('./controllers/api/player.controller'));
 app.use('/api/tatamis', require('./controllers/api/tatami.controller'));
 app.use('/api/judges', require('./controllers/api/judge.controller'));
 app.use('/api/categories', require('./controllers/api/categorie.controller'));
+app.use('/api/fights', require('./controllers/api/fight.controller'));
 
 
 // make '/app' default route

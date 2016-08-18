@@ -1,9 +1,9 @@
 <h3>
-    Judges   
+    Fights   
 </h3>
 <br/>
-<button class="btn btn-primary" ng-click="vm.openModal()">
-    Add judges
+<button class="btn btn-primary" ng-click="vm.generateFights()"  ng-show="vm.fights.length == 0">
+    Generate fights
 </button>
 <label class="search-label">Search: <input ng-model="searchText"></label>
 <br/>
@@ -11,28 +11,50 @@
     <thead>
         <tr>         
             <th>
-                First name
+                Fights
             </th>
             <th>
-                Last name
+                Nationality
             </th>
+            <th>
+                Category
+            </th>
+            <th>
+                Results
+            </th>
+             <th>
+                Tatami
+            </th>             
             <th>
             </th>
         </tr>
     </thead>
     <tbody>
-        <tr ng-repeat="judge in vm.judges | filter:searchText">            
+        <tr ng-repeat="fight in vm.fights | filter:searchText">            
             <td>
-                {{judge.firstname}}                
+                <b>{{fight.player1.firstname}} {{fight.player1.lastname}}</b> 
+                <br/>
+                <b>{{fight.player2.firstname}} {{fight.player2.lastname}}</b>               
+            </td>
+            <td>
+                {{fight.player1.nationality}} 
+                <br/>
+                {{fight.player2.nationality}}
             </td>
              <td>
-                {{judge.lastname}}                
+                 {{fight.player1.weight}}                 
+            </td>
+             <td>
+                {{fight.result}}              
+            </td>
+            <td>
+                {{fight.tatami}}
             </td>
             <td style="text-align:right">
-                <button class="btn btn-sm btn-primary"  ng-click="vm.openModal(judge._id)">
+                <button class="btn btn-sm btn-primary"  ng-click="vm.openModal(fight._id)">
                     Edit
                 </button>                
-                <button class="btn btn-sm btn-danger" ng-click="vm.deleteJudge(judge._id)">
+                <button class="btn btn-sm btn-danger" ng-click="vm.deleteFight(fight._id)">
                     Delete
                 </button>
             </td>
@@ -40,7 +62,7 @@
     </tbody>
 </table>
 <div aria-hidden="true" aria-labelledby="myModalLabel" class="modal fade" id="myModal" role="dialog" tabindex="-1">
-    <form method="judge">
+    <form method="fight">
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -50,26 +72,26 @@
                         </span>
                     </button>
                     <h4 class="modal-title" id="myModalLabel" ng-show="vm.edit">
-                        Edit Judge
+                        Edit Fight
                     </h4>
                     <h4 class="modal-title" id="myModalLabel" ng-show="!vm.edit">
-                        Add Judge
+                        Add Fight
                     </h4>
 
                 </div>
                 <div class="modal-body">
                     <div class="form-container">
                         <div class="form-group">
-                            <label for="judge.firstname">
+                            <label for="fight.firstname">
                                 First name
                             </label>
-                            <input class="form-control" id="judge.firstname" ng-model="vm.judge.firstname" required="" type="text"/>
+                            <input class="form-control" id="fight.firstname" ng-model="vm.fight.firstname" required="" type="text"/>
                         </div>
                         <div class="form-group">
-                            <label for="judge.lastname">
+                            <label for="fight.lastname">
                                 Last name
                             </label>
-                            <input class="form-control" id="judge.lastname" ng-model="vm.judge.lastname" required="" type="text"/>
+                            <input class="form-control" id="fight.lastname" ng-model="vm.fight.lastname" required="" type="text"/>
                         </div>
                     </div>
                 </div>
@@ -77,10 +99,10 @@
                     <button class="btn btn-secondary" data-dismiss="modal" type="button">
                         Close
                     </button>
-                    <button class="btn btn-primary" ng-click="vm.editJudge(vm.judge._id)" ng-show="vm.edit" type="button">
+                    <button class="btn btn-primary" ng-click="vm.editFight(vm.fight._id)" ng-show="vm.edit" type="button">
                         Save changes
                     </button>
-                    <button class="btn btn-primary" ng-click="vm.addJudge()" ng-show="!vm.edit" type="button">
+                    <button class="btn btn-primary" ng-click="vm.addFight()" ng-show="!vm.edit" type="button">
                         Save changes
                     </button>
                 </div>

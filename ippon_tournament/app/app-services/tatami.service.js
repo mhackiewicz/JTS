@@ -14,7 +14,8 @@
         service.Update = Update;
         service.Delete = Delete;
         service.AddJudges = AddJudges;     
-        service.AddCategories = AddCategories;     
+        service.AddCategories = AddCategories;   
+        service.AddStaff = AddStaff;  
 
         return service;
       
@@ -43,6 +44,13 @@
          function AddCategories(tatamiId, categorie) {
             return $http.post('/api/tatamis/addCategories', {
                 categorie: categorie,
+                _tatamiId: tatamiId
+            }).then(handleSuccess, handleError);
+        }   
+
+        function AddStaff(tatamiId, staff) {
+            return $http.post('/api/tatamis/addStaff', {
+                staff: staff,
                 _tatamiId: tatamiId
             }).then(handleSuccess, handleError);
         }    

@@ -1,0 +1,121 @@
+<h3>
+    Weight
+</h3>
+<br/>
+<!-- <button class="btn btn-primary" ng-click="vm.openModal()">
+    Add player
+</button> -->
+<label class="search-label">Search: <input ng-model="searchText"></label>
+<br/>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                First name
+            </th>
+            <th>
+                Last name
+            </th>
+            <th>
+                Age
+            </th>
+            <th>
+                Weight
+            </th>
+            <th>
+                Nationality
+            </th>
+            <th>
+                Sex
+            </th>
+            <th>
+                Club name
+            </th>
+            <th>
+                Status
+            </th>
+            <th>
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr ng-repeat="player in vm.players | filter:searchText">
+            <td>
+                {{player.firstname}}
+            </td>
+            <td>
+                {{player.lastname}}
+            </td>
+            <td>
+                {{player.age}}
+            </td>
+            <td>
+                {{player.weight}}
+            </td>
+            <td>
+                {{player.nationality}}
+            </td>
+            <td>
+                {{player.sex}}
+            </td>
+             <td>
+                {{player.clubname}}
+            </td>
+            <td ng-if="player.status=='for_verification'">
+                <span class="blue-status">for verification</span>
+            </td>
+            <td ng-if="player.status=='for_weighting'">
+                <span class="yellow-status">weighting</span>                
+            </td>
+            <td ng-if="player.status=='ready'">
+                <span class="green-status">ready</span>
+            </td>
+              <td ng-if="player.status=='blocked'">
+                <span class="blocked-status">blocked</span>
+            </td>
+            <td>
+                <button class="btn btn-primary btn-sm" ng-click="vm.openModal(player._id)">
+                    Set weight
+                </button>              
+            </td>
+        </tr>
+    </tbody>
+</table>
+<div aria-hidden="true" aria-labelledby="myModalLabel" class="modal fade" id="myModal" role="dialog" tabindex="-1">
+    <form method="post">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button aria-label="Close" class="close" data-dismiss="modal" type="button">
+                        <span aria-hidden="true">
+                            ×
+                        </span>
+                    </button>
+                    <h4 class="modal-title" id="myModalLabel">
+                        Set weight
+                    </h4>
+                
+                </div>
+                <div class="modal-body">
+                    <div class="form-container">
+                        <div class="form-group">
+                            <label for="player.category">
+                                Weight categories
+                            </label>
+                             <select class="form-control" id="categoriesSelect" ng-model="vm.addingCategorie" ng-options="categorie as categorie.name  for categorie in  vm.categories">
+                            </select>
+                        </div>                       
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" data-dismiss="modal" type="button">
+                        Close
+                    </button>
+                    <button class="btn btn-primary" ng-click="vm.editPlayer(vm.player._id)" type="button">
+                        Save changes
+                    </button>                   
+                </div>
+            </div>
+        </div>
+    </form>
+</div>

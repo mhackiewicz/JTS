@@ -21,13 +21,13 @@
             data: {
                 activeTab: 'account'
             }
-        }).state('users', {
-            url: '/users',
+        }).state('staff', {
+            url: '/staff',
             templateUrl: 'users/index.html',
             controller: 'Users.IndexController',
             controllerAs: 'vm',
             data: {
-                activeTab: 'users'
+                activeTab: 'staff'
             }
         }).state('players', {
             url: '/players',
@@ -55,7 +55,36 @@
             data: {
                 activeTab: 'categories'
             }
+        })
+        .state('verification', {
+            url: '/verification',
+            templateUrl: 'verification/index.html',
+            controller: 'Verification.IndexController',
+            controllerAs: 'vm',
+            data: {
+                activeTab: 'verification'
+            }
+        })
+         .state('weight', {
+            url: '/weight',
+            templateUrl: 'weight/index.html',
+            controller: 'Weight.IndexController',
+            controllerAs: 'vm',
+            data: {
+                activeTab: 'weight'
+            }
+        })
+         .state('fights', {
+            url: '/fights',
+            templateUrl: 'fights/index.html',
+            controller: 'Fights.IndexController',
+            controllerAs: 'vm',
+            data: {
+                activeTab: 'Fights'
+            }
         });
+
+        
     }
 
     function run($http, $rootScope, $window) {
@@ -67,7 +96,7 @@
         });
     }
 
-    function Controller($rootScope, $window, UserService, CompetitionService, FlashService) {
+    function Controller($rootScope, $window, UserService, CompetitionService, FlashService, $location) {
         var vm = this;
         vm.user = {};
         vm.actualCompetition = {};
@@ -86,15 +115,20 @@
                     vm.isAdmin = true;
                 } else if (user.role == 'weight') {
                     vm.isWeight = true;
+                    $location.path('/weight')
                 } else if (user.role == 'verification') {
                     vm.isVerification = true;
+                    $location.path('/verification')
                 } else if (user.role == 'fight_service') {
                     vm.isFightService = true;
+                    $location.path('/fight-service')
                 } else if (user.role == 'results_preview') {
                     vm.isResultsPreview = true;
+                    $location.path('/results-preview')
                 }
             });
-            getAllCompetitions();
+            getAllCompetitions();          
+
         }
 
         function getAllCompetitions() {

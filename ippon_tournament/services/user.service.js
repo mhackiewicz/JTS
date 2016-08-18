@@ -26,18 +26,22 @@ service.authenticate = authenticate;
 service.getById = getById;
 service.create = create;
 service.getAll = getAll;
+service.getAllForTatamis = getAllForTatamis;
+
 service.update = update;
 service.delete = _delete;
 
 module.exports = service;
 
-function getAll() {
-    var deferred = Q.defer();
-
-    db.staff.find().toArray(function(err, user) {
+function getAll(_id) {
+    var deferred = Q.defer();   
+    db.staff.find({
+        _competitionId: _id
+    }).toArray(function(err, user) {
         if (err) deferred.reject(err.name + ': ' + err.message);
 
-        if (user) {                  
+        if (user) {    
+
             deferred.resolve(user);
         } else {           
             deferred.resolve();
@@ -46,6 +50,28 @@ function getAll() {
 
     return deferred.promise;
 }
+
+function getAllForTatamis(_id) {
+    var deferred = Q.defer();   
+    db.staff.find({
+        _competitionId: _id,
+        role: 'fight_service'
+    }).toArray(function(err, user) {
+        if (err) deferred.reject(err.name + ': ' + err.message);
+
+        if (user) {    
+
+            deferred.resolve(user);
+        } else {           
+            deferred.resolve();
+        }
+    });
+
+    return deferred.promise;
+}
+
+
+
 
 function authenticate(username, password) {
     var deferred = Q.defer();
@@ -99,12 +125,11 @@ function create(userParam) {
             }
         });
 
-    function createUser() {
+    function createUser() {       
         // set user object to userParam without the cleartext password
-        var user = _.omit(userParam, 'passwd');
-        user.role = "user";       
+        var user = _.omit(userParam, 'password');
         // add hashed password to user object
-        user.hash = bcrypt.hashSync(userParam.passwd, 10);
+        user.hash = bcrypt.hashSync(userParam.password, 10);
 
         db.staff.insert(
             user,
@@ -171,7 +196,7 @@ function update(_id, userParam) {
     return deferred.promise;
 }
 
-function _delete(_id) {
+function _delete(_id) {    
     var deferred = Q.defer();
 
     db.staff.remove(
